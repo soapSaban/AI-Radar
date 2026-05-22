@@ -1,0 +1,18 @@
+# PlatformIO
+.pio/
+.vscode/
+
+# Python Virtual Environments
+radar_env/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Data & Models (Uncomment these if you do not want your personal data on GitHub)
+# *.csv
+# *.keras
