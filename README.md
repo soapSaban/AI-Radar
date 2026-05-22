@@ -1,0 +1,57 @@
+# Active Radar Command 📡
+
+An edge-AI hardware telemetry node and local web dashboard. This system uses a physical sensor gimbal (Arduino) to continuously sweep a room, capturing spatial distance, optical variance, and thermal exhaust. The raw telemetry is streamed over serial to a local Python Ground Station, where a 1D-CNN (Convolutional Neural Network) classifies the user's physical state (e.g., `CODING` vs `GAMING`) in real-time. 
+
+The live classification and sensor matrix are broadcasted to a mobile UI via a Flask web server.
+
+## 🛠️ The Hardware Stack
+
+*   **Microcontroller:** Arduino Uno (ATmega328P)
+*   **Actuator:** 28BYJ-48 Stepper Motor + ULN2003 Driver Board
+*   **Spatial Sensor:** HC-SR04 Ultrasonic Sensor
+*   **Optical Sensors:** 2x Photoresistors (LDRs) with 10kΩ pull-down resistors
+*   **Thermal Sensor:** LM35 Temperature Sensor
+*   **Power & Prototyping:** Breadboard and Dupont jumper wires
+
+### 🔌 Circuit Connections
+
+| Component | Pin / Terminal | Arduino Pin | Notes |
+| :--- | :--- | :--- | :--- |
+| **ULN2003 Driver** | IN1 | `D8` | Stepper Coil 1 |
+| | IN2 | `D9` | Stepper Coil 2 |
+| | IN3 | `D10` | Stepper Coil 3 |
+| | IN4 | `D11` | Stepper Coil 4 |
+| | `+` / VCC | `5V` | Ensure breadboard power rail is continuous |
+| | `-` / GND | `GND` | |
+| **HC-SR04** | Trig | `D2` | |
+| | Echo | `D3` | |
+| | VCC | `5V` | |
+| | GND | `GND` | |
+| **LDR (Left)** | Signal (Divider) | `A0` | Wired in series with a 10kΩ pull-down resistor |
+| **LDR (Right)** | Signal (Divider) | `A1` | Wired in series with a 10kΩ pull-down resistor |
+| **LM35 (Temp)** | Vout (Middle Pin) | `A2` | Flat side facing you: Left=5V, Middle=A2, Right=GND |
+
+---
+
+## 🧠 The Software Stack
+
+*   **Embedded C++:** PlatformIO (Arduino framework) utilizing `Stepper.h`.
+*   **Python Server:** Flask (Local network hosting) & PySerial.
+*   **Machine Learning:** TensorFlow/Keras, Pandas, NumPy.
+
+## 🚀 Deployment Guide
+
+### Phase 1: Hardware Bring-Up
+1. Clone this repository and open the folder in VS Code with the **PlatformIO** extension installed.
+2. Build and upload the firmware to the Arduino Uno. 
+3. Verify the stepper motor begins its 15-degree sweeping rhythm.
+
+### Phase 2: The Python Environment
+Open a terminal in the project root and build an isolated sandbox:
+```bash
+# Create and activate the virtual environment (Windows Bash)
+python -m venv radar_env
+source radar_env/Scripts/activate
+
+# Install the Deep Learning & Server Stack
+pip install pandas numpy tensorflow pyserial flask
