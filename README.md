@@ -4,7 +4,7 @@ An edge-AI hardware telemetry node and local web dashboard. This system uses a p
 
 The live classification and sensor matrix are broadcasted to a mobile UI via a Flask web server.
 
-## 🛠️ The Hardware Stack
+## The Hardware Stack
 
 *   **Microcontroller:** Arduino Uno (ATmega328P)
 *   **Actuator:** 28BYJ-48 Stepper Motor + ULN2003 Driver Board
@@ -13,7 +13,7 @@ The live classification and sensor matrix are broadcasted to a mobile UI via a F
 *   **Thermal Sensor:** LM35 Temperature Sensor
 *   **Power & Prototyping:** Breadboard and Dupont jumper wires
 
-### 🔌 Circuit Connections
+### Circuit Connections
 
 | Component | Pin / Terminal | Arduino Pin | Notes |
 | :--- | :--- | :--- | :--- |
@@ -33,13 +33,13 @@ The live classification and sensor matrix are broadcasted to a mobile UI via a F
 
 ---
 
-## 🧠 The Software Stack
+##  The Software Stack
 
 *   **Embedded C++:** PlatformIO (Arduino framework) utilizing `Stepper.h`.
 *   **Python Server:** Flask (Local network hosting) & PySerial.
 *   **Machine Learning:** TensorFlow/Keras, Pandas, NumPy.
 
-## 🚀 Deployment Guide
+##  Deployment Guide
 
 ### Phase 1: Hardware Bring-Up
 1. Clone this repository and open the folder in VS Code with the **PlatformIO** extension installed.
