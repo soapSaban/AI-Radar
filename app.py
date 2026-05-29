@@ -12,8 +12,9 @@ log.setLevel(logging.ERROR)
 app = Flask(__name__)
 
 # Load the Neural Network
-print("[ LOADING RADAR BRAIN... ]")
-model = tf.keras.models.load_model('radar_brain.keras')
+print("[ LOADING 1D-CNN RADAR BRAIN... ]")
+# ---> UPDATED TO LOAD THE NEW MODEL <---
+model = tf.keras.models.load_model('radar_brain_1DCNN.keras')
 print("[ AI ONLINE ]")
 
 telemetry = {
@@ -50,7 +51,10 @@ def read_serial():
                         telemetry["ldr_r"] = ldrr
                         telemetry["temp"] = temp
 
-                        live_data = np.array([[dist, ldrl, ldrr, temp]])
+                        # ---> CRITICAL PATCH: RESHAPE FOR 1D-CNN <---
+                        # Converts (4,) array to (1, 1, 4) tensor [samples, time_steps, features]
+                        live_data = np.array([dist, ldrl, ldrr, temp]).reshape(1, 1, 4)
+                        
                         prediction = model.predict(live_data, verbose=0)[0][0]
                         
                         if prediction >= 0.5:
@@ -128,5 +132,5 @@ def data():
 
 if __name__ == '__main__':
     print("\n[ WEB UI ONLINE ] Open this exact link on your phone:")
-    print("http://192.168.29.120:5000n")
+    print("http://192.168.29.120:5000\n")
     app.run(host='0.0.0.0', port=5000)
