@@ -1,4 +1,8 @@
 # Active Radar Command 📡
+> **Note regarding `AI Radar Demo.mp4`:** The raw video file exceeds GitHub's standard LFS (Large File Storage) streaming constraints. To ensure zero-latency playback and avoid forcing you to download a large binary file, the real-time HD inference demo has been routed through YouTube's CDN below.
+
+## System Demonstration
+[![AI Radar Demo](https://img.youtube.com/vi/32M-KwvBX2A/0.jpg)](https://youtu.be/32M-KwvBX2A)
 
 An edge-AI hardware telemetry node and local web dashboard. This system uses a physical sensor gimbal (Arduino) to continuously sweep a room, capturing spatial distance, optical variance, and thermal exhaust. The raw telemetry is streamed over serial to a local Python Ground Station, where a 1D-CNN (Convolutional Neural Network) classifies the user's physical state (e.g., `CODING` vs `GAMING`) in real-time. 
 
